@@ -328,7 +328,7 @@ def get_plugins_status(item):
 
 def update_first_buttons_message():
     history = "✅" if config.PASS_HISTORY else "☑️"
-    language = "🇨🇳 中文" if config.LANGUAGE == "Simplified Chinese" else "🇺🇸 English"
+    language = "🇹🇼 繁體中文" if config.LANGUAGE == "Simplified Chinese" else "🇺🇸 English"
 
     first_buttons = [
         [
