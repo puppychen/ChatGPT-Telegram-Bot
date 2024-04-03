@@ -328,7 +328,7 @@ def get_plugins_status(item):
 
 def update_first_buttons_message():
     history = "✅" if config.PASS_HISTORY else "☑️"
-    language = "🇹🇼 繁體中文" if config.LANGUAGE == "Traditional Chinese Mandarin in Taiwan" else "🇺🇸 English"
+    language = "🇹🇼 繁體中文" if config.LANGUAGE == "Traditional Chinese" else "🇺🇸 English"
 
     first_buttons = [
         [
@@ -405,12 +405,12 @@ async def button_press(update, context):
             parse_mode='MarkdownV2'
         )
     elif "language" in data:
-        if config.LANGUAGE == "Traditional Chinese Mandarin in Taiwan":
+        if config.LANGUAGE == "Traditional Chinese":
             config.LANGUAGE = "English"
-            config.systemprompt = config.systemprompt.replace("Traditional Chinese Mandarin in Taiwan", "English")
+            config.systemprompt = config.systemprompt.replace("Traditional Chinese", "English")
         else:
-            config.LANGUAGE = "Traditional Chinese Mandarin in Taiwan"
-            config.systemprompt = config.systemprompt.replace("English", "Traditional Chinese Mandarin in Taiwan")
+            config.LANGUAGE = "Traditional Chinese"
+            config.systemprompt = config.systemprompt.replace("English", "Traditional Chinese")
         # config.systemprompt = f"You are ChatGPT, a large language model trained by OpenAI. Respond conversationally in {config.LANGUAGE}. Knowledge cutoff: 2021-09. Current date: [ {config.Current_Date} ]"
         if config.API:
             config.ChatGPTbot = GPT(api_key=f"{config.API}", engine=config.GPT_ENGINE, system_prompt=config.systemprompt, temperature=config.temperature)
@@ -635,7 +635,7 @@ if __name__ == '__main__':
     # application.add_handler(CommandHandler("search", lambda update, context: search(update, context, title=f"`🤖️ {config.GPT_ENGINE}`\n\n", robot=config.ChatGPTbot)))
     application.add_handler(CallbackQueryHandler(button_press))
     application.add_handler(CommandHandler("reset", reset_chat))
-    application.add_handler(CommandHandler("en2zh", lambda update, context: command_bot(update, context, "Traditional Chinese Mandarin in Taiwan", robot=config.translate_bot)))
+    application.add_handler(CommandHandler("en2zh", lambda update, context: command_bot(update, context, "Traditional Chinese", robot=config.translate_bot)))
     application.add_handler(CommandHandler("zh2en", lambda update, context: command_bot(update, context, "english", robot=config.translate_bot)))
     # application.add_handler(CommandHandler("copilot", lambda update, context: command_bot(update, context, None, None, title=f"`🤖️ {config.GPT_ENGINE}`\n\n", robot=config.copilot_bot)))
     application.add_handler(CommandHandler("info", info))
