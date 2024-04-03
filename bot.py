@@ -334,7 +334,7 @@ def update_first_buttons_message():
         [
             InlineKeyboardButton("更換Ai類型", callback_data="更換Ai類型"),
             InlineKeyboardButton(language, callback_data="language"),
-            InlineKeyboardButton(f"历史记录 {history}", callback_data="PASS_HISTORY"),
+            InlineKeyboardButton(f"歷史記錄 {history}", callback_data="PASS_HISTORY"),
         ],
         [
             InlineKeyboardButton(f"搜尋 {get_plugins_status('SEARCH_USE_GPT')}", callback_data='SEARCH_USE_GPT'),

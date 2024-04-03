@@ -37,7 +37,7 @@ if API:
     try:
         GPT4visionbot = GPT(api_key=f"{API}", engine="gpt-4-vision-preview", system_prompt=systemprompt, temperature=temperature)
     except:
-        print("无法使用 gpt-4-vision-preview 模型")
+        print("無法使用 gpt-4-vision-preview 模型")
     translate_bot = GPT(api_key=f"{API}", engine=GPT_ENGINE, system_prompt=systemprompt, temperature=temperature)
     copilot_bot = GPT(api_key=f"{API}", engine=GPT_ENGINE, system_prompt=prompt.search_system_prompt.format(LANGUAGE), temperature=temperature)
     dallbot = Imagebot(api_key=f"{API}")
