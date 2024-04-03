@@ -130,7 +130,7 @@ async def command_bot(update, context, language=None, prompt=translator_prompt, 
     else:
         message = await context.bot.send_message(
             chat_id=chatid,
-            text="请在命令后面放入文本。",
+            text="請在命令後放入內容。",
             parse_mode='MarkdownV2',
             reply_to_message_id=messageid,
         )
@@ -203,7 +203,7 @@ async def getChatGPT(update, context, title, robot, message, chatid, messageid):
         if config.API:
             robot.reset(convo_id=str(chatid), system_prompt=config.systemprompt)
         if "You exceeded your current quota, please check your plan and billing details." in str(e):
-            print("OpenAI api 已过期！")
+            print("OpenAI api 已過期！")
             await context.bot.delete_message(chat_id=chatid, message_id=messageid)
             messageid = ''
             config.API = ''
@@ -231,9 +231,9 @@ async def image(update, context):
 
     if (len(context.args) == 0):
         message = (
-            f"格式错误哦~，示例：\n\n"
-            f"`/pic 一只可爱长毛金渐层趴在路由器上`\n\n"
-            f"👆点击上方命令复制格式\n\n"
+            f"格式错误哦~，範例：\n\n"
+            f"`/pic 一只可愛的長毛犬在大草原跑著`\n\n"
+            f"👆點選上方命令複製\n\n"
         )
         await context.bot.send_message(chat_id=chatid, text=escape(message), parse_mode='MarkdownV2', disable_web_page_preview=True)
         return
@@ -259,15 +259,15 @@ async def image(update, context):
         print(e)
         print('\033[0m')
         if "You exceeded your current quota, please check your plan and billing details." in str(e):
-            print("OpenAI api 已过期！")
-            result += "OpenAI api 已过期！"
+            print("OpenAI api 已過期！")
+            result += "OpenAI api 已過期！"
             config.API = ''
         elif "content_policy_violation" in str(e) or "violates OpenAI's policies" in str(e):
-            result += "当前 prompt 未能成功生成图片，可能因为版权，政治，色情，暴力，种族歧视等违反 OpenAI 的内容政策😣，换句话试试吧～"
+            result += "目前 prompt 無法成功產生圖片，可能因為版權、政治、色情、等違反 OpenAI 的内容政策😣，换個內容試試吧～"
         elif "server is busy" in str(e):
-            result += "服务器繁忙，请稍后再试～"
+            result += "服務主機繁重，請稍後再試～"
         elif "billing_hard_limit_reached" in str(e):
-            result += "当前账号余额不足～"
+            result += "目前帳戶額度不足～"
         else:
             result += f"`{e}`"
         await context.bot.edit_message_text(chat_id=chatid, message_id=start_messageid, text=escape(result), parse_mode='MarkdownV2', disable_web_page_preview=True)
@@ -319,7 +319,7 @@ buttons = [
     #     InlineKeyboardButton("gpt-4-1106-preview", callback_data="gpt-4-1106-preview"),
     # ],
     [
-        InlineKeyboardButton("返回上一级", callback_data="返回上一级"),
+        InlineKeyboardButton("返回上一頁", callback_data="返回上一頁"),
     ],
 ]
 
@@ -328,21 +328,21 @@ def get_plugins_status(item):
 
 def update_first_buttons_message():
     history = "✅" if config.PASS_HISTORY else "☑️"
-    language = "🇹🇼 繁體中文" if config.LANGUAGE == "Simplified Chinese" else "🇺🇸 English"
+    language = "🇹🇼 繁體中文" if config.LANGUAGE == "Traditional Chinese Mandarin in Taiwan" else "🇺🇸 English"
 
     first_buttons = [
         [
-            InlineKeyboardButton("更换问答模型", callback_data="更换问答模型"),
+            InlineKeyboardButton("更換Ai類型", callback_data="更換Ai類型"),
             InlineKeyboardButton(language, callback_data="language"),
             InlineKeyboardButton(f"历史记录 {history}", callback_data="PASS_HISTORY"),
         ],
         [
-            InlineKeyboardButton(f"搜索 {get_plugins_status('SEARCH_USE_GPT')}", callback_data='SEARCH_USE_GPT'),
-            InlineKeyboardButton(f"当前时间 {get_plugins_status('DATE')}", callback_data='DATE'),
+            InlineKeyboardButton(f"搜尋 {get_plugins_status('SEARCH_USE_GPT')}", callback_data='SEARCH_USE_GPT'),
+            InlineKeyboardButton(f"目前時間 {get_plugins_status('DATE')}", callback_data='DATE'),
         ],
         [
-            InlineKeyboardButton(f"URL 总结 {get_plugins_status('URL')}", callback_data='URL'),
-            InlineKeyboardButton(f"版本信息 {get_plugins_status('VERSION')}", callback_data='VERSION'),
+            InlineKeyboardButton(f"URL 資訊 {get_plugins_status('URL')}", callback_data='URL'),
+            InlineKeyboardButton(f"版本資訊 {get_plugins_status('VERSION')}", callback_data='VERSION'),
             # InlineKeyboardButton(f"gpt4free {get_plugins_status('USE_G4F')}", callback_data='USE_G4F'),
         ],
     ]
@@ -361,7 +361,7 @@ def update_info_message(update):
         f"**WEB_HOOK:** `{config.WEB_HOOK}`\n\n"
     )
 
-banner = "👇下面可以随时更改默认 gpt 模型："
+banner = "👇下面可以隨時變更預設的 gpt 類型："
 @decorators.AdminAuthorization
 @decorators.GroupAuthorization
 @decorators.Authorization
@@ -392,7 +392,7 @@ async def button_press(update, context):
         except Exception as e:
             logger.info(e)
             pass
-    elif "更换问答模型" in data:
+    elif "更換Ai類型" in data:
         message = await callback_query.edit_message_text(
             text=escape(info_message + banner),
             reply_markup=InlineKeyboardMarkup(buttons),
@@ -405,12 +405,12 @@ async def button_press(update, context):
             parse_mode='MarkdownV2'
         )
     elif "language" in data:
-        if config.LANGUAGE == "Simplified Chinese":
+        if config.LANGUAGE == "Traditional Chinese Mandarin in Taiwan":
             config.LANGUAGE = "English"
-            config.systemprompt = config.systemprompt.replace("Simplified Chinese", "English")
+            config.systemprompt = config.systemprompt.replace("Traditional Chinese Mandarin in Taiwan", "English")
         else:
-            config.LANGUAGE = "Simplified Chinese"
-            config.systemprompt = config.systemprompt.replace("English", "Simplified Chinese")
+            config.LANGUAGE = "Traditional Chinese Mandarin in Taiwan"
+            config.systemprompt = config.systemprompt.replace("English", "Traditional Chinese Mandarin in Taiwan")
         # config.systemprompt = f"You are ChatGPT, a large language model trained by OpenAI. Respond conversationally in {config.LANGUAGE}. Knowledge cutoff: 2021-09. Current date: [ {config.Current_Date} ]"
         if config.API:
             config.ChatGPTbot = GPT(api_key=f"{config.API}", engine=config.GPT_ENGINE, system_prompt=config.systemprompt, temperature=config.temperature)
@@ -469,7 +469,7 @@ async def handle_pdf(update, context):
     if config.ClaudeAPI and "claude-3" in config.GPT_ENGINE:
         robot.add_to_conversation(claude3_doc_assistant_prompt, "assistant", str(update.effective_chat.id))
     message = (
-        f"文档上传成功！\n\n"
+        f"文件上傳成功！\n\n"
     )
     await context.bot.send_message(chat_id=update.message.chat_id, text=escape(message), parse_mode='MarkdownV2', disable_web_page_preview=True)
 
@@ -528,7 +528,7 @@ async def handle_photo(update, context):
     # if config.ClaudeAPI and "claude-3" in config.GPT_ENGINE:
     #     robot.add_to_conversation(claude3_doc_assistant_prompt, "assistant", str(update.effective_chat.id))
     message = (
-        f"图片上传成功！\n\n"
+        f"圖片上傳成功！\n\n"
     )
     await context.bot.send_message(chat_id=update.message.chat_id, text=escape(message), parse_mode='MarkdownV2', disable_web_page_preview=True)
 
@@ -579,9 +579,9 @@ async def inlinequery(update, context):
 async def start(update, context): # 当用户输入/start时，返回文本
     user = update.effective_user
     message = (
-        "我是人见人爱的 ChatGPT~\n\n"
-        "欢迎访问 https://github.com/yym68686/ChatGPT-Telegram-Bot 查看源码\n\n"
-        "有 bug 可以联系 @yym68686"
+        "我是有趣的 ChatGPT~\n\n"
+        "目前正在以繁中回覆\n\n"
+        ""
     )
     await update.message.reply_html(rf"Hi {user.mention_html()} ! I am an Assistant, a large language model trained by OpenAI. I will do my best to help answer your questions.",)
     await update.message.reply_text(escape(message), parse_mode='MarkdownV2', disable_web_page_preview=True)
@@ -635,7 +635,7 @@ if __name__ == '__main__':
     # application.add_handler(CommandHandler("search", lambda update, context: search(update, context, title=f"`🤖️ {config.GPT_ENGINE}`\n\n", robot=config.ChatGPTbot)))
     application.add_handler(CallbackQueryHandler(button_press))
     application.add_handler(CommandHandler("reset", reset_chat))
-    application.add_handler(CommandHandler("en2zh", lambda update, context: command_bot(update, context, "Simplified Chinese", robot=config.translate_bot)))
+    application.add_handler(CommandHandler("en2zh", lambda update, context: command_bot(update, context, "Traditional Chinese Mandarin in Taiwan", robot=config.translate_bot)))
     application.add_handler(CommandHandler("zh2en", lambda update, context: command_bot(update, context, "english", robot=config.translate_bot)))
     # application.add_handler(CommandHandler("copilot", lambda update, context: command_bot(update, context, None, None, title=f"`🤖️ {config.GPT_ENGINE}`\n\n", robot=config.copilot_bot)))
     application.add_handler(CommandHandler("info", info))
