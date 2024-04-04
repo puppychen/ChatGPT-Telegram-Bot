@@ -9,7 +9,7 @@ def Authorization(func):
             message = (
                 f"`Hi, {args[0].effective_user.username}!`\n\n"
                 f"id: `{args[0].effective_user.id}`\n\n"
-                f"无权访问！\n\n"
+                f"權限不足！\n\n"
             )
             await args[1].bot.send_message(chat_id=args[0].effective_user.id, text=message, parse_mode='MarkdownV2')
             return
@@ -27,7 +27,7 @@ def GroupAuthorization(func):
             message = (
                 f"`Hi, {args[0].effective_user.username}!`\n\n"
                 f"id: `{args[0].effective_user.id}`\n\n"
-                f"无权访问！\n\n"
+                f"權限不足！\n\n"
             )
             await args[1].bot.send_message(chat_id=args[0].effective_chat.id, text=message, parse_mode='MarkdownV2')
             return
@@ -43,7 +43,7 @@ def AdminAuthorization(func):
             message = (
                 f"`Hi, {args[0].effective_user.username}!`\n\n"
                 f"id: `{args[0].effective_user.id}`\n\n"
-                f"无权访问！\n\n"
+                f"權限不足！\n\n"
             )
             await args[1].bot.send_message(chat_id=args[0].effective_user.id, text=message, parse_mode='MarkdownV2')
             return
